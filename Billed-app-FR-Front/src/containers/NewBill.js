@@ -19,7 +19,8 @@ export default class NewBill {
   }
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    const fileInput = this.document.querySelector(`input[data-testid="file"]`)
+    const file = fileInput.files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
@@ -27,6 +28,10 @@ export default class NewBill {
     const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg']
     if(!validImageTypes.includes(file.type)) {
       alert('Invalid file type')
+      fileInput.value = '' // Réinitialiser l'input file
+      this.fileUrl = null
+      this.fileName = null
+      this.formData = null
       return
     }
 
